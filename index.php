@@ -1,75 +1,91 @@
-<?php
-include "../../template/header-admin.php";
-include "../../template/sidebar-admin.php";
-require '../../dbconnection.php';
-?>
-
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community List</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-    <div class="max-w-6xl">
-        <!-- Button kembali ke halaman tambah komunitas -->
-        <div class="text-center mb-6">
-            <a href="add-new.php" class="bg-red-700 text-white px-4 py-2 rounded">Add New Community</a>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="pageStyle.css" />
+    <title>SportsSpace</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav__header">
+        <div class="nav__logo">
+          <a href="">
+            <img src="asset/img/logo.png" alt="">
+          </a>
         </div>
-
-        <!-- Tabel daftar komunitas -->
-        <table class="table-auto w-full bg-white rounded shadow border-collapse border border-gray-300">
-            <thead>
-                <tr class="bg-red-700 text-white">
-                    <th class="p-2 border">ID</th>
-                    <th class="p-2 border">Name</th>
-                    <th class="p-2 border">Sports Category</th>
-                    <th class="p-2 border">Province</th>
-                    <th class="p-2 border">City</th>
-                    <th class="p-2 border">Description</th>
-                    <th class="p-2 border">Profile Picture</th>
-                    <th class="p-2 border">Cover Picture</th>
-                    <th class="p-2 border text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                <?php
-                $query = "SELECT * FROM komunitas";
-                $result = $conn->query($query);
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr class='hover:bg-gray-100'>
-                                <td class='p-2 border'>{$row['id_kmnts']}</td>
-                                <td class='p-2 border'>{$row['nama']}</td>
-                                <td class='p-2 border'>{$row['jns_olahraga']}</td>
-                                <td class='p-2 border'>{$row['provinsi']}</td>
-                                <td class='p-2 border'>{$row['kota']}</td>
-                                <td class='p-2 border'>{$row['deskripsi']}</td>
-                                <td class='p-2 border text-center'>
-                                    <img src='{$row['foto_profil']}' alt='Profile Picture' class='w-16 h-16 object-cover mx-auto'>
-                                </td>
-                                <td class='p-2 border text-center'>
-                                    <img src='{$row['foto_sampul']}' alt='Cover Picture' class='w-24 h-16 object-cover mx-auto'>
-                                </td>
-                                <td class='p-2 border text-center'>
-                                    <a href='indexedit.php?id={$row['id_kmnts']}' class='bg-blue-600 text-white px-2 py-1 rounded'>Edit</a>
-                                    <a href='delete.php?id={$row['id_kmnts']}' onclick='return confirm(\"Yakin ingin menghapus?\");' class='bg-red-600 text-white px-2 py-1 rounded'>Delete</a>
-                                </td>
-                              </tr>";
-                    }
-                } else {
-                    echo "<tr>
-                            <td colspan='9' class='p-4 text-center text-gray-500'>No communities found.</td>
-                          </tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-
-        
-    </div>
-</body>
+        <div class="nav__menu__btn" id="menu-btn">
+          <span><i class="ri-menu-line"></i></span>
+        </div>
+      </div>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="register.php">Sign Up</a></li>
+        <li><a href="login.php">Sign In</a></li>
+      </ul>
+      <div class="nav__btns">
+        <button class="btn sign__up">Sign Up</button>
+        <button class="btn sign__in">Sign In</button>
+      </div>
+    </nav>
+    <header class="header__container">
+      <div class="header__image">
+        <div class="header__image__card header__image__card-1">
+          <span><i class="ri-key-line"></i></span>
+          Badminton
+        </div>
+        <div class="header__image__card header__image__card-2">
+          <span><i class="ri-basketball-line"></i></i></span>
+          Basketball
+        </div>
+        <div class="header__image__card header__image__card-3">
+          <span><i class="ri-ping-pong-line"></i></span>
+          Tennis
+        </div>
+        <div class="header__image__card header__image__card-4">
+          <span><i class="ri-football-fill"></i></span>
+          Futsal
+        </div>
+        <img src="asset/img/young-man-badminton-player-standing-white-fit-male-athlete.png" alt="header" />
+      </div>
+      <div class="header__content">
+        <h1>Move Together<br/>Stay <span>Healthy</span> <br> Make friend</h1>
+        <p>
+            Whether you're looking to unwind from your studies, stay active, 
+            or simply have fun, our app has everything you need.
+        </p>
+        <form action="/">
+          <div class="input__row">
+            <div class="input__group">
+              <h5>Fields</h5>
+              <div>
+                <span><i class="ri-input-field"></i></i></span>
+                <input type="text" placeholder="More Than 100+" />
+              </div>
+            </div>
+            <div class="input__group">
+              <h5>Date</h5>
+              <div>
+                <span><i class="ri-calendar-2-line"></i></span>
+                <input type="text" placeholder="Anytime" />
+              </div>
+            </div>
+          </div>
+          <button type="submit">Search</button>
+        </form>
+        <div class="bar">
+          Copyright © 2024 Web Design Mastery. All rights reserved.
+        </div>
+      </div>
+    </header>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="main.js"></script>
+  </body>
+  
 </html>
