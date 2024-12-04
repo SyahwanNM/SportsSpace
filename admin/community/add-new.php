@@ -46,17 +46,27 @@ require '../../dbconnection.php';
                         <label class="block text-gray-700 font-bold">Community Name:</label>
                         <input type="text" name="nama" class="w-full border border-red-600 rounded p-2" required>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-4" >
                         <label class="block text-gray-700 font-bold">Sports Category:</label>
-                        <input type="text" name="jns_olahraga" class="w-full border border-red-600 rounded p-2" required>
+                        <select name="jns_olahraga" id="jns_olahraga" class="w-full border border-red-600 rounded p-2" required>
+                            <option value="">Sports Category</option>
+                            <option value="football">Football</option>
+                            <option value="badminton">Badminton</option>
+                            <option value="basketball">Basketball</option>
+                        </select>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold">Maximum Members:</label>
                         <input type="number" name="max_members" class="w-full border border-red-600 rounded p-2" required>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-4" >
                         <label class="block text-gray-700 font-bold">Province:</label>
-                        <input type="text" name="provinsi" class="w-full border border-red-600 rounded p-2" required>
+                        <select name="provinsi" id="provinsi" class="w-full border border-red-600 rounded p-2" required>
+                            <option value="">province</option>
+                            <option value="DKI Jakarta">DKI Jakarta</option>
+                            <option value="Sulawesi Tengah">Sulawesi Tengah</option>
+                            <option value="Jawa Timur">Jawa Timur</option>
+                        </select>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold">City:</label>
