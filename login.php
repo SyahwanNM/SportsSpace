@@ -1,17 +1,13 @@
 <?php
 session_start();
 
+include "dbconnection.php";
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $conn = new mysqli('localhost','root','','sports_space');
 
-    if($conn->connect_error) {
-        die("Koneksi gagal: ".$conn->connect_error);
-    }
-
-    $stmt = $conn->prepare("SELECT username,password,role,user_id FROM users WHERE username =?");
+    $stmt = $conn->prepare("SELECT username,email,password,role,user_id FROM users WHERE username =?");
     $stmt->bind_param('s', $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -21,12 +17,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(password_verify($password, $users['password'])){
             $_SESSION['username'] = $users['username'];
             $_SESSION['user_id'] = $users['user_id'];
+            $_SESSION['email'] = $users['email'];
             $_SESSION['role'] = $users['role'];
             if($users['role'] == 'admin'){
                 header('Location: admin/index.php');
                 exit();
             } else{
-                header('Location: users/index.php');
+                header('Location: sports_enthusiast/index.php');
                 exit();
             }
             exit();

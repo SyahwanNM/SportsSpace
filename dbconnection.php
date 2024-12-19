@@ -8,5 +8,6 @@
 
     if(!$conn){
         die("conneciton faild" .mysqli_connect_error());
-    }
+    } 
+    
 ?>

@@ -12,8 +12,7 @@ if ($_SESSION['role'] !== 'admin') {
 include "../dbconnection.php";
 include "../template/header-admin.php";
 include "../template/sidebar-admin.php";
-// include "..\auth.php";
-// $required_role = "admin"; // Tentukan role yang diperlukan
+
 ?>
 <html lang="en">
     <head>

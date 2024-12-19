@@ -1,16 +1,17 @@
 <?php
 include "dbconnection.php";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
-    $role = $_POST['role']; // Role bisa 'admin' atau 'user'
-    $kota = $_POST['kota'];
-    $gender = $_POST['gender'];
-
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
+  $role ='sports_enthusiast'; 
+  $kota = $_POST['kota'];
+  $gender = $_POST['gender'];
+    
 
     // Menyisipkan data ke tabel users
-    $stmt = $conn->prepare("INSERT INTO users (username, password, role, kota,gender) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $username, $password, $role, $kota, $gender);
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password, role, kota,gender) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssss', $username, $email, $password, $role, $kota, $gender);
 
     if ($stmt->execute()) {
         $message = "Registrasi berhasil! <a href='login.php'>Login di sini</a>";
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php endif; ?>
     <div class="button-close">
       <button><a href="index.php">&times;</a></button>
-      <h3 class="signup-text">Sign in For Sport Space</h3>
+      <h3 class="signup-text">Sign Up For Sport Space</h3>
     </div>
     <form method="POST" action="register.php" class="signup-form">
       <div class="input-wrapper">
@@ -67,13 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <option value="" disabled selected>Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
-          </select>
-        </div>
-        <div class="select-item" >
-          <select name="role" id="role" class="item" required>
-            <option value="" disabled selected>role</option>
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
           </select>
         </div>
       </div>
