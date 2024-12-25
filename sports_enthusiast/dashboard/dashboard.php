@@ -7,8 +7,6 @@ include '../../template/header-user.php';
 include '../../template/sidebar-user.php';
 include '../../template/footer.php';
 
-
-
 // Base URL
 $base_url = "http://" . $_SERVER['HTTP_HOST'] . "/SportsSpace";
 
