@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header('Location: admin/index.php');
                 exit();
             } else{
-                header('Location: sports_enthusiast/index.php');
+                header('Location: sports_enthusiast/dashboard/dashboard.php');
                 exit();
             }
             exit();

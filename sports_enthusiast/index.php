@@ -1,10 +1,10 @@
 <?php
-session_start();
-$base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace";
-if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
-    header("Location:". $base_url. "/login.php");
-    exit();
-}
+// session_start();
+// $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace";
+// if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+//     header("Location:". $base_url. "/login.php");
+//     exit();
+// }
 // include "../template/header-user.php";
 // include "../template/sidebar-user.php";
 // include "../template/right-menu-users.php";
