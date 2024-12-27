@@ -1,5 +1,5 @@
 <?php
-include "../../dbconnect.php";
+include '../../dbconnection.php';
 $sql = "SELECT * FROM komunitas";
 $result = $conn->query($sql);
 ?>
@@ -182,18 +182,18 @@ $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) { 
                  ?> 
                 <div class="relative">
-                    <?php echo '<img src="../asset login/komunitas/ . $row[] . " class="w-full h-32 object-cover">'; ?>
+                    <?php echo '<img src="images/komunitas/' . $row['sampul'] . '" class="w-full h-32 object-cover">'; ?>
                 </div>
 
                 <!-- Bagian Profil Komunitas -->
                 <div class="flex items-center justify-center -mt-12">
-                    <img src="../asset login/img/futsal-bg.jpg" alt="Basketball Icon" class="w-32 h-32 rounded-full border-4 border-white shadow-md z-10">
+                  <?php echo '<img src="images/komunitas/' . $row['foto'] . '"class="w-32 h-32 rounded-full border-4 border-white shadow-md z-10">'; ?>
                 </div>
 
                 <!-- Informasi Komunitas -->
                 <div class="text-center mt-4 mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800 items-center">Basket Majalaya</h2>
-                    <p class="text-gray-600">Basket • Bandung • 20/25</p>
+                    <?php echo '<h2 class="text-2xl font-bold text-gray-800 items-center">'. $row['nama'] .'</h2>'; ?>
+                    <?php echo '<p class="text-gray-600">'.$row['tipe']. '|' .$row['kota']. '|' .$row['maxMember'].'</p>'; ?>
                 </div>
                 <div class="flex justify-end mb-6 pr-6">
                     <button class="items-center bg-red-600 text-white w-24 px-4 py-2 rounded-lg hover:bg-red-700">JOIN</button>
@@ -211,10 +211,7 @@ $result = $conn->query($sql);
 
                 <div id="About-community" class="tab-content bg-white p-6 rounded-b-lg shadow-md">
                     <div class="p-4">
-                        <p class="text-gray-700 leading-relaxed">
-                            Selamat datang di komunitas basket kami, sebuah keluarga besar yang dipersatukan oleh cinta dan dedikasi terhadap olahraga bola basket. Kami percaya bahwa basket lebih dari sekadar permainan; ini adalah wadah untuk mengekspresikan diri, mengembangkan karakter, dan membangun persahabatan yang erat.
-                            Di komunitas kami, setiap anggota, dari yang pemula hingga yang berpengalaman, diperlakukan dengan rasa hormat dan diberi kesempatan yang sama untuk berkembang. Kami menyediakan program latihan yang dirancang untuk meningkatkan keterampilan individu serta strategi tim. Dengan bimbingan pelatih profesional dan berpengalaman, kami memastikan bahwa setiap sesi latihan tidak hanya efektif, tetapi juga menyenangkan dan menginspirasi.
-                        </p>
+                        <?php echo '<p class="text-gray-700 leading-relaxed">'.$row['Deskripsi'].'</p>';?>
                     </div>
                 </div>
 

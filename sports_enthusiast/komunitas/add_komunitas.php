@@ -1,5 +1,5 @@
 <?php
-include "../../dbconnect.php";
+include '../../dbconnection.php';
 
 if (isset($_POST['btnSubmit'])) {
     $id = $_POST["idKomunitas"];

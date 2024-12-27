@@ -1,5 +1,5 @@
 <?php
-include "../../dbconnect.php";
+include '../../dbconnection.php';
 $sql = "SELECT * FROM komunitas";
 $result = $conn->query($sql);
 
@@ -202,7 +202,7 @@ $result = $conn->query($sql);
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                       echo '<a href="detailKomunitas.php">';
+                       echo '<a href="detail_komunitas.php">';
                         echo '<div class="bg-white shadow-lg rounded-lg p-4 hover:bg-gray-300">';
                         echo '<img src="images/komunitas/' . $row['foto'] . '"  class="rounded-lg mb-3 w-full h-auto">';
                         echo '<h4 class="font-bold text-md">' . $row['nama'] . '</h4>';
