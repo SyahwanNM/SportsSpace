@@ -1,40 +1,44 @@
 <?php
 session_start();
-
 include "dbconnection.php";
+
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-
-    $stmt = $conn->prepare("SELECT username,email,password,role,user_id FROM users WHERE username =?");
+    $stmt = $conn->prepare("SELECT username, email, password, role, user_id FROM users WHERE username =?");
     $stmt->bind_param('s', $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows>0 ){
+    if ($result->num_rows > 0) {
         $users = $result->fetch_assoc();
-        if(password_verify($password, $users['password'])){
+        if (password_verify($password, $users['password'])) {
             $_SESSION['username'] = $users['username'];
             $_SESSION['user_id'] = $users['user_id'];
             $_SESSION['email'] = $users['email'];
             $_SESSION['role'] = $users['role'];
-            if($users['role'] == 'admin'){
+
+            // Cek apakah ada parameter redirect yang dikirimkan
+            $redirect_url = isset($_GET['redirect']) ? $_GET['redirect'] : '';
+
+            if ($users['role'] == 'admin') {
                 header('Location: admin/index.php');
                 exit();
-            } else{
-                header('Location: sports_enthusiast/dashboard/dashboard.php');
+            } else {
+                // Arahkan ke halaman yang diinginkan setelah login
+                header('Location: ' . ($redirect_url ?: 'sports_enthusiast/dashboard/post_list.php'));
                 exit();
             }
-            exit();
-        }else{
+        } else {
             echo "Password Salah!";
         }
-    }else{
-        echo"Username Tidak Ditemukan!";
+    } else {
+        echo "Username Tidak Ditemukan!";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
