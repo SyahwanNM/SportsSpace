@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
 require '../../dbconnection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_id = $_SESSION['user_id'];
     $title = $_POST['title'];
     $event_date = $_POST['event_date'];
     $start_time = $_POST['start_time'];
@@ -17,12 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $kapasitas_maksimal = $_POST['kapasitas_maksimal'];
     $current_members = 0;
     $jenis_olahraga = $_POST['jenis_olahraga'];
-    $payment_method = $_POST['payment_method'];
+    $payment_method = isset($_POST['payment_method']) ? implode(',', $_POST['payment_method']) : '';
     $payment_amount = $_POST['payment_amount'];
 
     // Insert data into database
-    $query = "INSERT INTO sports_group (title, event_date, start_time,end_time,city, address, kapasitas_maksimal, current_members, jenis_olahraga,payment_method,payment_amount)
-              VALUES ('$title', '$event_date', '$start_time', '$end_time', '$city', '$address', '$kapasitas_maksimal', '$current_members', '$jenis_olahraga', '$payment_method', '$payment_amount')";
+    $query = "INSERT INTO sports_group (user_id, title, event_date, start_time,end_time,city, address, kapasitas_maksimal, current_members, jenis_olahraga,payment_method,payment_amount)
+              VALUES ('$user_id','$title', '$event_date', '$start_time', '$end_time', '$city', '$address', '$kapasitas_maksimal', '$current_members', '$jenis_olahraga', '$payment_method', '$payment_amount')";
 
     if ($conn->query($query) === TRUE) {
         header("Location: http://" .$_SERVER['HTTP_HOST'] ."/sportsspace/sports_enthusiast/sports_group/index.php");
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 include "../../template/header-user.php";
-include "../../template/sidebar-user.php"
+// include "../../template/sidebar-user.php"
 ?>
 
 <!DOCTYPE html>
@@ -83,11 +84,11 @@ include "../../template/sidebar-user.php"
                     <div class="mb-4 ">
                         <label class="block text-gray-700 font-bold">Payment Method:</label>
                         <label>
-                            <input type="checkbox" name="payment_option" value="cash">
+                            <input type="checkbox" name="payment_method[]" value="cash">
                             Cash
                         </label>
                         <label>
-                            <input type="checkbox" name="payment_option" value="free">
+                            <input type="checkbox" name="payment_method[]" value="transfer">
                             Transfer
                         </label>
                     </div>
@@ -121,6 +122,10 @@ include "../../template/sidebar-user.php"
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold">Address (Google Maps Link):</label>
                         <input type="text" name="address" class="w-full border border-red-600 rounded p-2 " required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-bold">Payment Amount: </label>
+                        <input type="number" name="payment_amount" class="w-full border border-red-600 rounded p-2"required>
                     </div>
                 </div>
             </div>
