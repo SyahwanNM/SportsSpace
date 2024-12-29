@@ -106,7 +106,7 @@ include "../../template/sidebar-user.php"
                     </div>
                     <div class="mb-4" >
                         <label class="block text-gray-700 font-bold">Sports Type:</label>
-                        <select name="sport_type" id="sport_type" class="w-full border border-red-600 rounded p-2" required>
+                        <select name="jenis_olahraga" id="sport_type" class="w-full border border-red-600 rounded p-2" required>
                             <option value=""></option>
                             <option value="Futsal">Futsal</option>
                             <option value="Badminton">Badminton</option>
