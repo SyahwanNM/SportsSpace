@@ -48,6 +48,10 @@ include '../../template/footer.php';
 
 <main class="pt-20 pb-20">
     <div class="flex flex-col lg:flex-row">
+<<<<<<< HEAD
+=======
+        <!-- Sidebar -->
+>>>>>>> 6303b5fe6c1af908667c46b1b1148c686a206f59
         <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0 lg:static">
             <?php include '../../template/sidebar-user.php'; ?>
         </div>
@@ -128,7 +132,7 @@ include '../../template/footer.php';
         </div>
 
         <!-- Kolom Samping -->
-        <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0">
+        <div class="flex-grow lg:w-1/5 md:w-1/5 sm:w-full p-4 sticky top-0">
             <?php include '../../template/right-menu-users.php'; ?>
         </div>
 
