@@ -51,6 +51,7 @@ include '../../template/header-user.php';
                      if ($result->num_rows>0){
                         while ($row = $result->fetch_assoc()){
                            echo "
+                           <a href='{$base_url}/sports_group/detail-group.php?id={$row['id']}'>
                            <div class='my-2 p-2 bg-gray-100 relative rounded-lg shadow'>";
                            $jenis_olahraga = $row['jenis_olahraga'];
                            if ($jenis_olahraga == 'Badminton') {
@@ -99,7 +100,8 @@ include '../../template/header-user.php';
                               <img class='rounded-full w-6' src='https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg' alt=''>
                            </div>
                         </div>
-                    </div>";
+                    </div>
+                    </a>";
                         }
                      }
                   ?>

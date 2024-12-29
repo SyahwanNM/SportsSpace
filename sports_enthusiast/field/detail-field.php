@@ -2,8 +2,20 @@
 session_start();
 require "../../dbconnection.php";
 include '../../template/header-user.php';
-$id = $_GET['id_field'];
 $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast";
+$id = $_GET['id'];
+$query = "SELECT * FROM field WHERE id_field = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+} else {
+    echo "Field not found.";
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,15 +41,15 @@ $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast"
 </style>
 <body class="bg-gray-100">
    <main class="pt-20">
-      <div class="flex justify-end">
-         <?php
-            include '../../template/sidebar-user.php';
-         ?>
+      <div class="flex flex-col lg:flex-row">
+         <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0 lg:static">
+            <?php include '../../template/sidebar-user.php'; ?>
+         </div>
          <!-- Main Content -->
-         <div class="lg:w-3/5 md:w-3/5 p-4 ">  
+         <div class="flex-grow lg:w-4/5 md:w-3/4 sm:w-full p-4">
             <div class="bg-white p-4 rounded-lg shadow mb-4 flex items-center space-x-40">
                <i class="fa-solid fa-xmark fa-xl" style="color: #D60505;"></i>
-               <h2 class=" text-2xl font-bold text-red-700 mb-2">Futsal Yogya Bojongsoang</h2>
+               <h2 class=" text-2xl font-bold text-red-700 mb-2"><?=$row['nama_lapangan']?></h2>
             </div>
             <!-- Banner -->
 
@@ -47,11 +59,11 @@ $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast"
                   <div class="relative h-52 overflow-hidden rounded-lg md:h-75">
                      <!-- Item 1 -->
                      <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="../image/futsal-yogya1.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                        <img src="<?=$row['foto']?>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                      </div>
                      <!-- Item 2 -->
                      <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <img src="../image/futsal-yogya2.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                        <img src="<?=$row['foto']?>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                      </div>
                   </div>
                   <!-- Slider indicators -->
@@ -82,24 +94,24 @@ $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast"
             <div class="bg-white p-4 rounded-lg shadow mb-4">
                <div class="flex items-center justify-between">
                <div class="flex items-center">
-                  <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <!-- <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                  </svg>
-                  <p class="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p>
+                  </svg> -->
+                  <!-- <p class="ms-2 text-sm font-bold text-gray-900 dark:text-white">4.95</p> -->
                   <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
-                  <a href="#" class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a>
+                  <!-- <a href="#" class="text-sm font-medium text-gray-900 underline hover:no-underline dark:text-white">73 reviews</a> -->
                </div>
-               <p class="bg-red-700 rounded-md my-4 mr-4 p-2 text-white text-sm text-center font-extrabold">FUTSAL</p>
+               <p class="bg-red-700 rounded-md my-4 mr-4 p-2 text-white text-sm text-center font-extrabold"><?=$row['type']?></p>
                </div>
-               <p class="bg-red-700 rounded-md my-4 mr-4 p-1 text-white text-sm text-center w-1/4 font-bold"> Rp. 100.000/HOURS</p>
+               <?php
+                   $price_format = number_format($row['price'], 0, ',', '.');
+               ?>
+               <p class="bg-red-700 rounded-md my-4 mr-4 p-1 text-white text-sm text-center w-1/4 font-bold"><?=$price_format?> /Jam</p>
                <div class="flex items-center">
                   <i class="fa-solid fa-circle-chevron-right mr-2"></i>
                   <h2 class="font-semibold text-md">Description</h2>
                </div>
-               <p class="text-justify mb-2">Selamat datang di Lapangan Futsal Yogyakarta Bojongsoang! Kami menawarkan fasilitas lapangan futsal berkualitas tinggi dengan kondisi terawat dan nyaman, 
-                  ideal untuk Anda yang ingin bermain futsal bersama teman atau tim. Lapangan kami dilengkapi dengan pencahayaan yang memadai, 
-                  permukaan yang aman, dan fasilitas pendukung lainnya seperti ruang ganti dan parkir luas. 
-               </p>
+               <p class="text-justify mb-2"><?=$row['description']?></p>
                
 
                
@@ -203,4 +215,9 @@ $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast"
       </div>
    </main>
 </body>
+<footer>
+   <?php
+   include '../../template/footer.php';
+   ?>
+</footer>
 </html>

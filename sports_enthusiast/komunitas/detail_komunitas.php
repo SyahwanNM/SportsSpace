@@ -319,5 +319,10 @@ $result = $conn->query($sql);
          </div>
       </div>
    </main>
+   <footer>
+   <?php
+   include '../../template/footer.php';
+   ?>
+</footer>
 </body>
 </html>
