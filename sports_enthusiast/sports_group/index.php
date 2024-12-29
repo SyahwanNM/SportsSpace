@@ -2,7 +2,6 @@
 $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast";
 require "../../dbconnection.php";
 include '../../template/header-user.php';
-include '../../template/footer.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +34,12 @@ include '../../template/footer.php';
          <!-- Main Content -->
          <div class="xl:w-3/5 lg:w-3/5 md:w-3/5 p-4 mr-8">
             <!-- Banner -->
-            
+            <div class="bg-white p-4 rounded-lg shadow mb-4">
+               <h2 class="text-2xl font-bold text-red-700 mb-4">Create Sports Group</h2>
+               <a href="<?=$base_url?>/sports_group/add.php">
+                  <button class="text-blue-500 flex items-center hover:text-blue-700 mb-4">Click here to add sports group</button>
+               </a>
+            </div>
             <!-- Post -->
             <div class="bg-white p-4 rounded-lg shadow mb-4">
                   <h1 class="text-center font-extrabold text-xl text-red-700 mb-6">SPORTS GROUP</h1>
@@ -98,27 +102,18 @@ include '../../template/footer.php';
                         }
                      }
                   ?>
-                    
-                    
-                    <div class="my-2 p-2 bg-gray-100 relative rounded-lg shadow">
-                        
-                        
-                        <div class="py-2 items-center justify-between bg-red-700 absolute bottom-0 right-0 left-0 rounded-b-lg flex">
-                           <div class="items-center mx-2 flex">
-                              
-                              
-                           </div>
-                           
-                        </div>
-</div>
-</div>
-                
-               </div>
+               </div>  
             </div>
-            <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0">
-               <?php include '../../template/right-menu-users.php'; ?>
-            </div>
+         </div>
+         <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0">
+            <?php include '../../template/right-menu-users.php'; ?>
+         </div>
       </div>
    </main>
 </body>
+<footer>
+   <?php
+   include '../../template/footer.php';
+   ?>
+</footer>
 </html>

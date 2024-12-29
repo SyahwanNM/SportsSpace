@@ -9,6 +9,7 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     exit();
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $post_title = $_POST['post_title'];
     $post_content = $_POST['post_content'];
@@ -30,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 include '../../template/header-user.php';
 include '../../template/footer.php';
- ?>
+?>
 
 
 <!DOCTYPE html>
@@ -46,12 +47,12 @@ include '../../template/footer.php';
 <body class="bg-gray-100">
 
 <main class="pt-20 pb-20">
-    <div class="flex justify-end">
-        <!-- Kolom Utama -->
-            <?php
-            include '../../template/sidebar-user.php';
-            ?>
-        <div class="xl:w-3/5 lg:w-3/5 md:w-3/5 p-4 mr-8">
+    <div class="flex flex-col lg:flex-row">
+        <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0 lg:static">
+            <?php include '../../template/sidebar-user.php'; ?>
+        </div>
+
+        <div class="flex-grow lg:w-4/5 md:w-3/4 sm:w-full p-4">
             <!-- Carousel -->
             <div class="flex mb-4">
                 <div id="default-carousel" class="relative w-full" data-carousel="slide">

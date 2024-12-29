@@ -21,7 +21,7 @@ $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast/
    }
 </style>
 <body>
-   <aside id="logo-sidebar" class="fixed top-0 left-6 z-40 w-64 h-[87vh] pt-20 transition-transform -translate-x-full bg-white border-r sm:translate-x-0 lg:w-1/5 md:w-1/5 sm:w-1/5" aria-label="Sidebar">
+   <aside id="logo-sidebar" class="fixed top-0 left-6 z-40 w-64 h-[87vh] pt-20 bg-white border-r transition-transform duration-300 transform -translate-x-full  sm:translate-x-0 " aria-label="Sidebar">
       <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
          <ul class="space-y-2 text-sm">
                <li>
