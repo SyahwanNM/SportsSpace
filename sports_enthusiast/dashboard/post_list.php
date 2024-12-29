@@ -1,9 +1,7 @@
 <?php
 session_start();
-include 'db_connection.php'; // koneksi ke database
-include '../../template/header-user.php';
-include '../../template/sidebar-user.php';
-include '../../template/footer.php';
+$base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace";
+require '../../dbconnection.php'; // koneksi ke database
 
 // Pastikan user sudah login
 if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
@@ -11,62 +9,28 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Menangani form submit
-    $postTitle = mysqli_real_escape_string($conn, $_POST['postTitle']);
-    $postContent = mysqli_real_escape_string($conn, $_POST['postContent']);
-    
-    // Menangani gambar yang diupload
-    $postImage = '';
-    if (isset($_FILES['postImage']) && $_FILES['postImage']['error'] == 0) {
-        $imageName = $_FILES['postImage']['name'];
-        $imageTmpName = $_FILES['postImage']['tmp_name'];
-        $imageSize = $_FILES['postImage']['size'];
-        $imageExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $post_title = $_POST['post_title'];
+    $post_content = $_POST['post_content'];
 
-        // Validasi ekstensi file
-        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-        if (!in_array($imageExtension, $allowedExtensions)) {
-            echo "Hanya file dengan ekstensi jpg, jpeg, png, gif yang diizinkan.";
-            exit();
-        }
+    // Upload files
+    $post_image = 'upload_post/' . basename($_FILES['post_image']['name']);
+    move_uploaded_file($_FILES['post_image']['tmp_name'], $post_image);
 
-        // Validasi ukuran file (misalnya maksimal 5MB)
-        if ($imageSize > 5000000) {
-            echo "Ukuran file terlalu besar. Maksimal 5MB.";
-            exit();
-        }
+    // Insert data into database
+    $query = "INSERT INTO posts (post_title, post_content, post_image)
+              VALUES ('$post_title', '$post_content', '$post_image')";
 
-        // Tentukan path untuk menyimpan gambar
-        $imagePath = 'sports_enthusiast/dashboard/upload_post' . $imageName;
-
-        // Memindahkan file ke folder yang dituju
-        if (move_uploaded_file($imageTmpName, $imagePath)) {
-            $postImage = 'upload_post/' . $imageName;
-        } else {
-            echo "Gagal mengupload gambar.";
-            exit();
-        }
-    }
-
-    // Menambahkan postingan ke database dengan prepared statement
-    $stmt = $conn->prepare("INSERT INTO posts (user_id, post_title, post_content, post_image, created_at) 
-                            VALUES (?, ?, ?, ?, NOW())");
-    $stmt->bind_param("isss", $_SESSION['user_id'], $postTitle, $postContent, $postImage);
-
-    if ($stmt->execute()) {
-        echo "Postingan berhasil ditambahkan!";
+    if ($conn->query($query) === TRUE) {
+        header("Location: http://" .$_SERVER['HTTP_HOST'] ."/sportsspace/sports_enthusiast/dashboard/post_list.php");
+        exit();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . $conn->error;
     }
-
-    $stmt->close();
 }
-
-// Mengambil semua postingan dari database
-$sql = "SELECT * FROM posts ORDER BY created_at DESC";
-$result = $conn->query($sql);
-?>
+include '../../template/header-user.php';
+include '../../template/footer.php';
+ ?>
 
 
 <!DOCTYPE html>
@@ -84,8 +48,10 @@ $result = $conn->query($sql);
 <main class="pt-20 pb-20">
     <div class="flex justify-end">
         <!-- Kolom Utama -->
+            <?php
+            include '../../template/sidebar-user.php';
+            ?>
         <div class="xl:w-3/5 lg:w-3/5 md:w-3/5 p-4 mr-8">
-
             <!-- Carousel -->
             <div class="flex mb-4">
                 <div id="default-carousel" class="relative w-full" data-carousel="slide">
@@ -106,16 +72,16 @@ $result = $conn->query($sql);
                <div id="postForm" class="bg-white p-4 rounded-lg shadow mb-8 hidden">
                    <form action="post_list.php" method="post" enctype="multipart/form-data" class="bg-gray-100 p-4 rounded-lg shadow">
                        <div class="mb-4">
-                           <label for="postTitle" class="block text-sm font-medium text-gray-700">Judul</label>
-                           <input type="text" id="postTitle" name="postTitle" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                           <label for="post_title" class="block text-sm font-medium text-gray-700">Judul</label>
+                           <input type="text" id="post_title" name="post_title" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
                        </div>
                        <div class="mb-4">
-                           <label for="postContent" class="block text-sm font-medium text-gray-700">Konten</label>
-                           <textarea id="postContent" name="postContent" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
+                           <label for="post_content" class="block text-sm font-medium text-gray-700">Konten</label>
+                           <textarea id="post_content" name="post_content" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required></textarea>
                        </div>
                        <div class="mb-4">
-                           <label for="postImage" class="block text-sm font-medium text-gray-700">Upload Gambar</label>
-                           <input type="file" id="postImage" name="postImage" accept="image/*" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+                           <label for="post_image" class="block text-sm font-medium text-gray-700">Upload Gambar</label>
+                           <input type="file" id="post_image" name="post_image" accept="image/*" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
                        </div>
                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">Submit</button>
                    </form>
@@ -133,25 +99,30 @@ $result = $conn->query($sql);
             <!-- Daftar Postingan -->
             <div class="bg-white p-4 rounded-lg shadow mb-8">
                 <h2 class="text-2xl font-bold text-red-700 mb-4">Activity Feed</h2>
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <div class="bg-white p-4 rounded-lg shadow mb-4">
-                            <div class="flex items-center mb-4">
-                                <img alt="User Profile" class="rounded-full w-12 h-12" height="40" src="/images/football.jpg" width="40" />
-                                <div class="ml-3">
-                                    <p class="font-bold">Fadil</p>
-                                    <p class="text-gray-500 text-sm"><?php echo date('d M Y h:i A', strtotime($row['created_at'])); ?></p>
-                                </div>
+                <?php 
+                    $query = "SELECT * FROM posts";
+                    $result = $conn->query($query);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()){
+                            $created_at = date('d M Y h:i A', strtotime($row['created_at']));
+                            echo "
+                            <div class='bg-white p-4 rounded-lg shadow mb-4'>
+                            <div class='flex items-center mb-4'>
+                            <img alt='User Profile' class='rounded-full w-12 h-12' height='40' src='../../asset/img/football.jpg' width='40' />
+                            <div class='ml-3'>
+                            <p class='font-bold'>Fadil</p>
+                            <p class='text-gray-500 text-sm'>{$row['created_at']}</p>
                             </div>
-                            <p class="mb-4"><?php echo htmlspecialchars($row['post_content']); ?></p>
-                            <?php if (!empty($row['post_image'])): ?>
-                                <div class="w-full h-64 bg-cover bg-center rounded-lg mb-4" style="background-image: url('<?php echo htmlspecialchars($row['post_image']); ?>');"></div>
-                            <?php endif; ?>
-                        </div>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <p class="text-gray-500">Belum ada postingan.</p>
-                <?php endif; ?>
+                            </div>
+                            <p class='mb-4'>{$row['post_content']}</p>
+                                <div class='w-full h-64 bg-cover bg-center rounded-lg mb-4' style='background-image: url(\"{$row['post_image']}\")'></div>
+                                </div>";
+                        }
+                    }
+                else {
+                    echo "<p class='text-gray-500'>Belum ada postingan.</p>";
+                }
+                ?>
             </div>
         </div>
 

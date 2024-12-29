@@ -1,3 +1,6 @@
+<?php
+$base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

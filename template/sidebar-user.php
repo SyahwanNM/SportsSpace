@@ -1,3 +1,6 @@
+<?php
+$base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast/";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +25,7 @@
          <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
             <ul class="space-y-2 text-sm">
                <li>
-                  <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-red-700 hover:text-white group bg-red-700">
+                  <a href="<?=$base_url?>dashboard/post_list.php" class="flex items-center p-2 text-white rounded-lg hover:bg-red-700 hover:text-white group bg-red-700">
                      <i class="fi fi-rs-home">
                      </i>
                      <span class="ms-3">Dashboard</span>
@@ -30,7 +33,7 @@
                </li>
    
                <li>
-                  <a href="/komunitas/komunitas.html" class="flex items-center w-full p-2 text-base text-black hover:bg-red-600 hover:bg-red-600 hover:text-white duration-75 rounded-lg group" 
+                  <a href="<?=$base_url?>komunitas/index.php" class="flex items-center w-full p-2 text-base text-black hover:bg-red-600 hover:bg-red-600 hover:text-white duration-75 rounded-lg group" 
                      aria-controls="dropdown-example" 
                      data-collapse-toggle="dropdown-example">
                      <i class="fi fi-rs-users-alt"></i>   
@@ -44,7 +47,7 @@
                            <a href="#" class="flex items-center w-full p-2 text-black hover:bg-red-600 transition duration-75 rounded-lg pl-11">My Community</a>
                         </li>
                         <li>
-                           <a href="/komunitas/addKomunitas.html" class="flex items-center w-full p-2 text-black hover:bg-red-600 hover:text-white transition duration-75 rounded-lg pl-11">Add Community</a>
+                           <a href="<?=$base_url?>komunitas/index.php" class="flex items-center w-full p-2 text-black hover:bg-red-600 hover:text-white transition duration-75 rounded-lg pl-11">Add Community</a>
                         </li>
                   </ul>
                </li>
@@ -72,7 +75,7 @@
                
                
       
-                  <a href="/fields/fields.html" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
+                  <a href="<?=$base_url?>field/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
                      <i class="fi fi-rs-court-sport">
                      </i>
                      <span class="flex-1 ms-3 whitespace-nowrap">Field</span>
@@ -86,13 +89,13 @@
                   </a>
                </li>
                <li>
-                  <a href="/sports-group/sports-group.html" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
+                  <a href="<?=$base_url?>sports_group/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
                      <i class="fi fi-rs-two-swords"></i>
                      <span class="flex-1 ms-3 whitespace-nowrap">Sports Group</span>
                   </a>
                </li>
                <li>
-                  <a href="/profile/profile.html" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
+                  <a href="<?=$base_url?>profile/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
                      <i class="fi fi-rs-user">
                      </i>
                      <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
