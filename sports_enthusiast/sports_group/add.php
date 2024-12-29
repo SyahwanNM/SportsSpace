@@ -29,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Error: " . $conn->error;
     }
 }
+
+include "../../template/header-user.php";
+include "../../template/sidebar-user.php"
 ?>
 
 <!DOCTYPE html>
@@ -73,29 +76,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold">End Time: </label>
-                        <input type="date" name="event_date" class="w-full border border-red-600 rounded p-2"required>
+                        <input type="time" name="end_time" class="w-full border border-red-600 rounded p-2"required>
                     </div>
-                    <div class="mb-4" >
-                        <label class="block text-gray-700 font-bold">Sports Type:</label>
-                        <select name="type" id="sport_type" class="w-full border border-red-600 rounded p-2" required>
-                            <option value=""></option>
-                            <option value="Futsal">Futsal</option>
-                            <option value="Badminton">Badminton</option>
-                            <option value="Voli">Voli</option>
-                            <option value="Basket">Basket</option>
-                        </select>
+                    <div class="mb-4 ">
+                        <label class="block text-gray-700 font-bold">Payment Method:</label>
+                        <label>
+                            <input type="checkbox" name="payment_option" value="cash">
+                            Cash
+                        </label>
+                        <label>
+                            <input type="checkbox" name="payment_option" value="free">
+                            Transfer
+                        </label>
                     </div>
-                    <div class="mb-4" >
-                        <label class="block text-gray-700 font-bold">Field Category:</label>
-                        <select name="categori" id="categori" class="w-full border border-red-600 rounded p-2" required>
-                            <option value=""></option>
-                            <option value="Paid">Paid</option>
-                            <option value="Free">Free</option>
-                        </select>
-                    </div>
+                </div>
+                <!-- Right Column -->
+                <div class="w-1/2">
                     <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">Location:</label>
-                        <select name="lokasi" id="lokasi" class="w-full border border-red-600 rounded p-2" required>
+                        <label class="block text-gray-700 font-bold">City:</label>
+                        <select name="city" id="city" class="w-full border border-red-600 rounded p-2" required>
                             <option value=""></option>
                             <option value="Bandung">Bandung</option>
                             <option value="Jakarta">Jakarta</option>
@@ -103,46 +102,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <option value="Malang">Malang</option>
                         </select>
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">Field Picture:</label>
-                        <input type="file" name="foto" accept="image/*" class="w-full border border-red-600 rounded p-2" required>
-                    </div>
-                </div>
-                <!-- Right Column -->
-                <div class="w-1/2">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">Opening Hours:</label>
-                        <input type="text" name="opening_hours" class="w-full border border-red-600 rounded p-2 " required></input>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">Closing Hours:</label>
-                        <input type="text" name="closing_hours" class="w-full border border-red-600 rounded p-2" required>
+                    <div class="mb-4" >
+                        <label class="block text-gray-700 font-bold">Sports Type:</label>
+                        <select name="sport_type" id="sport_type" class="w-full border border-red-600 rounded p-2" required>
+                            <option value=""></option>
+                            <option value="Futsal">Futsal</option>
+                            <option value="Badminton">Badminton</option>
+                            <option value="Voli">Voli</option>
+                            <option value="Basket">Basket</option>
+                        </select>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">Facility:</label>
-                        <input type="text" name="fasility" class="w-full border border-red-600 rounded p-2" required>
+                        <label class="block text-gray-700 font-bold">Maximum Members:</label>
+                        <input type="number" name="max_members" class="w-full border border-red-600 rounded p-2" required>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">price:</label>
-                        <input type="number" name="price" class="w-full border border-red-600 rounded p-2" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold">Description:</label>
-                        <input type="text" name="description" class="w-full border border-red-600 rounded p-2 h-24" required>
+                        <label class="block text-gray-700 font-bold">Address (Google Maps Link):</label>
+                        <input type="text" name="address" class="w-full border border-red-600 rounded p-2 " required>
                     </div>
                 </div>
             </div>
 
             <div class="text-right">
-                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Add Field</button>
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Create Sports Gorup</button>
             </div>
             <div class="text-center mt-6">
-            <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/sportsspace/sports_enthusiast/field/index.php" class="bg-blue-600 text-white px-4 py-2 rounded"> Back Field</a>
+            <a href="http://<?= $_SERVER['HTTP_HOST'] ?>/sportsspace/sports_enthusiast/sports_group/index.php" class="bg-blue-600 text-white px-4 py-2 rounded"> Back </a>
             </div>
         </form>
     </div>
     
  </body>
+ <footer>
+   <?php
+   include '../../template/footer.php';
+   ?>
+</footer>
 </html>
 
 
