@@ -33,6 +33,7 @@ include '../../template/header-user.php';
          ?>
          <!-- Main Content -->
          <div class="xl:w-3/5 lg:w-3/5 md:w-3/5 p-4 mr-8">
+<<<<<<< HEAD
             <!-- Banner -->
             <div class="bg-white p-4 rounded-lg shadow mb-4">
                <h2 class="text-2xl font-bold text-red-700 mb-4">Create Sports Group</h2>
@@ -40,10 +41,13 @@ include '../../template/header-user.php';
                   <button class="text-blue-500 flex items-center hover:text-blue-700 mb-4">Click here to add sports group</button>
                </a>
             </div>
+=======
+            
+>>>>>>> 79e54fa8ea0e723d2b4f66ab833a1f086fb10909
             <!-- Post -->
             <div class="bg-white p-4 rounded-lg shadow mb-4">
                   <h1 class="text-center font-extrabold text-xl text-red-700 mb-6">SPORTS GROUP</h1>
-                <div class="grid grid-cols-3 gap-8">
+               <div class="grid grid-cols-3 gap-8">
                   <?php
                      $query = "SELECT * FROM sports_group";
                      $result = $result = $conn->query($query);
@@ -102,9 +106,16 @@ include '../../template/header-user.php';
                         }
                      }
                   ?>
+<<<<<<< HEAD
                </div>  
             </div>
          </div>
+=======
+               </div>
+            </div>
+         </div>
+
+>>>>>>> 79e54fa8ea0e723d2b4f66ab833a1f086fb10909
          <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0">
             <?php include '../../template/right-menu-users.php'; ?>
          </div>
