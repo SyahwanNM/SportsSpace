@@ -1,8 +1,9 @@
 <?php
 session_start();
 include '../../dbconnection.php';
-$base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace";
-$query = "SELECT foto, nama_lapangan, price, lokasi FROM field LIMIT 3";
+include '../../template/header-user.php';
+$base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast";
+$query = "SELECT * FROM field LIMIT 3";
 $result = $conn->query($query);
 ?>
 <!DOCTYPE html>
@@ -27,168 +28,13 @@ $result = $conn->query($query);
    }
 </style>
 <body class="bg-gray-100">
-   <nav class="fixed top-0 z-50 w-full bg-white border-red-700">
-      <div class="px-3 py-3 lg:px-5 lg:pl-3">
-      <div class="flex items-center justify-between">
-         <div class="flex items-center justify-start rtl:justify-end">
-            <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-black rounded-lg sm:hidden hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-400">
-               <span class="sr-only">Open sidebar</span>
-               <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-               </svg>
-            </button>
-            <a href="#" class="flex ms-2 md:me-24">
-            <img src="../../asset/img/logo.png" class="h-10 me-3" alt="FlowBite Logo" />
-            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"></span>
-            </a>
-         </div>
-         
-         <div class="flex items-center w-1/2 mr-40">
-            <div class="rounded-full bg-gray-200 hover:bg-red-500 mr-2">
-               <button class="p-2 rounded-lg bg-gray-200 hover:bg-red-500">
-                  <i class="fi fi-rs-bars-filter"></i>
-               </button>
-            </div>
-            <input class="border rounded-md px-6 py-2 w-full" placeholder="Search Here" type="text" />
-            <button class="ml-2 p-2 rounded-lg bg-gray-200 hover:bg-gray-300">
-               <i class="fi fi-rs-search"></i>
-            </button>
-         </div>
-         
-         <div class="flex items-center">
-            <button class="p-2 rounded-lg bg-gray-200 hover:bg-red-500">
-               <i class="fi fi-rs-bell"></i>
-            </button>
-            <div class="flex items-center ms-3">
-               <div>
-                  <button type="button" class="flex text-sm bg-white rounded-full focus:ring-4 focus:ring-red-500" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                  <span class="sr-only">Open user menu</span>
-                  <img class="w-10 h-10 rounded-full" src='https://hackspirit.com/wp-content/uploads/2021/06/Copy-of-Rustic-Female-Teen-Magazine-Cover.jpg' alt="user photo">
-                  </button>
-               </div>
-               <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-red-200 rounded shadow" id="dropdown-user">
-                  <div class="px-4 py-3" role="none">
-                  <p class="text-sm text-black" role="none">
-                     <?=htmlspecialchars($_SESSION['username']);?>
-                  </p>
-                  <p class="text-sm font-medium text-black truncate" role="none">
-                     <?=htmlspecialchars($_SESSION['email']);?>
-                  </p>
-                  </div>
-                  <ul class="py-1" role="none">
-                     <li>
-                        <a href="#" class="block px-4 py-2 text-sm text-black hover:bg-red-700 hover:text-white" role="menuitem">About Us</a>
-                     </li>
-                     <li>
-                        <a href="#" class="block px-4 py-2 text-sm text-black hover:bg-red-700 hover:text-white" role="menuitem">Contact Us</a>
-                     </li>
-                     <li>
-                        <a href="#" class="block px-4 py-2 text-black hover:bg-red-700 hover:text-white" role="menuitem">Settings</a>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-            <button data-modal-target="logout-modal" data-modal-toggle="logout-modal" class="text-red-900 hover:bg-red-600 hover:text-white rounded-full text-xs ml-2 px-2 py-2.5 text-center" type="button">
-               Log Out
-            </button>
-
-               <div id="logout-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                  <div class="relative p-4 w-full max-w-md max-h-full">
-                     <div class="relative bg-white rounded-lg shadow dark:bg-white">
-                        <!-- Tombol Close -->
-                        <button type="button" class="absolute top-3 end-2.5 text-red-600 bg-transparent hover:bg-red-600 hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-red-700 dark:hover:text-white" data-modal-hide="logout-modal">
-                           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                           </svg>
-                           <span class="sr-only">Close modal</span>
-                        </button>
-                           
-                           <!-- Konten Modal -->
-                        <div class="p-4 md:p-5 text-center">
-                           <h3 class="mb-5 text-lg font-normal text-gray-900 dark:text-gray-900">Are you sure you want to log out?</h3>
-                              
-                           <!-- Tombol Yes -->
-                           <a href="/landingpage/firstpage.html" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                              Yes, log out
-                           </a>
-                              
-                           <!-- Tombol No -->
-                           <button data-modal-hide="logout-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                              No, cancel
-                           </button>
-                        </div>
-                     </div>
-                  </div>
-               </div>  
-            </div>
-         </div>
-      </div>
-   </nav>
-   
-   <aside id="logo-sidebar" class="fixed top-0 z-40 w-64 h-[87vh] pt-20 transition-transform -translate-x-full bg-white border-r sm:translate-x-0" aria-label="Sidebar">
-      <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
-         <ul class="space-y-1 text-sm">
-            <li>
-               <a href="<?=$base_url?>/sports_enthusiast/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
-                  <i class="fi fi-rs-home">
-                  </i>
-                  <span class="ms-3">Dashboard</span>
-               </a>
-            </li>
-            <li>
-               <a href="/komunitas/komunitas.html" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
-                  <i class="fi fi-rs-users-alt"></i>
-                  <span class="flex-1 ms-3 whitespace-nowrap">Community</span>
-               </a>
-            </li>
-            <li>
-               <a href="/komunitas/addKomunitas.html" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
-                  <i class="fi fi-rs-users-alt"></i>
-                  <span class="flex-1 ms-3 whitespace-nowrap">Add Community</span>
-               </a>
-            </li>
-            <li>
-               <a href="/fields/fields.html" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
-                  <i class="fi fi-rs-court-sport">
-                  </i>
-                  <span class="flex-1 ms-3 whitespace-nowrap">Field</span>
-               </a>
-            </li>
-            <li>
-               <a href='<?=$base_url?>/sports_enthusiast/field/add.php' class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
-                  <i class="fi fi-rs-court-sport">
-                  </i>
-                  <span class="flex-1 ms-3 whitespace-nowrap">Add Field</span>
-               </a>
-            </li>
-            <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
-                  <i class="fi fi-rs-trophy-star"></i>
-                  </i>
-                  <span class="flex-1 ms-3 whitespace-nowrap">Reward</span>
-               </a>
-            </li>
-            <li>
-               <a href="/sports-group/sports-group.html" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
-                  <i class="fi fi-rs-two-swords"></i>
-                  <span class="flex-1 ms-3 whitespace-nowrap">Sports Group</span>
-               </a>
-            </li>
-            <li>
-               <a href="/profile/profile.html" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
-                  <i class="fi fi-rs-user">
-                  </i>
-                  <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
-               </a>
-            </li>
-         </ul>
-      </div>
-   </aside>
-
    <main class="pt-20 pb-20">
-    <div class="flex justify-end">
+    <div class="flex flex-col lg:flex-row">
+      <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0 lg:static">
+         <?php include '../../template/sidebar-user.php'; ?>
+      </div>
         <!-- Main Content -->
-        <div class="lg:w-3/5 md:w-3/5 p-4">
+        <div class="flex-grow lg:w-4/5 md:w-3/4 sm:w-full p-4">
             <div>
                 <h2 class="text-2xl font-bold mb-4">Trending</h2>
                     <!-- Tampilkan setiap lapangan dalam card -->
@@ -197,22 +43,22 @@ $result = $conn->query($query);
                      if ($result->num_rows > 0) {
                        while ($row = $result->fetch_assoc()) {
                            $price_format = number_format($row['price'], 0, ',', '.');
-                           echo "<a href=''>
+                           echo "<a href='{$base_url}/field/detail-field.php?id={$row['id_field']}'>
                                     <div class='bg-white p-4 rounded-lg shadow-lg hover:bg-gray-200'>
                                        <img alt='Field Photo' class='rounded-lg mb-4 h-24 w-40' src='{$row['foto']}'/>
                                        <h3 class='text-sm font-semibold'>{$row['nama_lapangan']}</h3>
                                        <p class='text-sm'>Price: Rp {$price_format} /Jam</p>
                                        <div class='flex items-center space-x-2'>
                                           <i class='fi fi-rs-marker text-red-600'></i>
-                                          <span>{$row['lokasi']}</span>
+                                          <p class='text-sm'>{$row['lokasi']}</p>
                                        </div>
                                     </div>
                                  </a>";
                          }
                      }
                      ?>
-                </div>
-            </div>
+                  </div>
+               </div>
 
             <!-- Recommended For You Section -->
             <div class="mt-8">
@@ -238,71 +84,13 @@ $result = $conn->query($query);
                      $stmt->close();
                      $conn->close();
                   ?>
-                    <!-- <div class="bg-white p-4 rounded-lg shadow-lg">
-                        <img alt="Rajawali Futsal" class="rounded-lg mb-4" height="200" src="https://storage.googleapis.com/a1aa/image/khwf9OkDd0S5Ti2taKacfJfL0H9e0L5t9DteEJthMfHlm059E.jpg" width="300"/>
-                        <h3 class="text-xl font-semibold">Rajawali Futsal</h3>
-                        <p>Price: 100.000</p>
-                        <div class="flex items-center space-x-2">
-                           <i class="fi fi-rs-marker text-red-600"></i>
-                            <span>Bandung</span>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-lg">
-                        <img alt="Lapang Telkom" class="rounded-lg mb-4" height="200" src="https://storage.googleapis.com/a1aa/image/7plmfOCUDw17WK1Z83Wi14AI8x1JEX0VF9o4dKWr8AFQpz7JA.jpg" width="300"/>
-                        <h3 class="text-xl font-semibold">Lapang Telkom</h3>
-                        <p>Price: Free</p>
-                        <div class="flex items-center space-x-2">
-                           <i class="fi fi-rs-marker text-red-600"></i>
-                            <span>Bandung</span>
-                        </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-lg">
-                        <img alt="Gym Majapahit" class="rounded-lg mb-4" height="200" src="https://storage.googleapis.com/a1aa/image/MUz5PT0MwyJUNp52sr6isHZZe9NWv3kq7lFi7voQDFWKpz7JA.jpg" width="300"/>
-                        <h3 class="text-xl font-semibold">Gym Majapahit</h3>
-                        <p>Price: 30.000</p>
-                        <div class="flex items-center space-x-2">
-                           <i class="fi fi-rs-marker text-red-600"></i>
-                            <span>Bandung</span>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
 
         <!-- Right Sidebar -->
-        <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4">
-            <div class="fixed md:relative sm:relative">
-                <!-- Friends List -->
-                <div class="bg-white p-4 rounded-lg shadow mb-4">
-                    <h3 class="text-lg font-bold mb-4">Friend</h3>
-                    <ul>
-                        <li class="flex items-center mb-2 hover:bg-gray-100 p-2 rounded-lg">
-                            <img alt="Friend 1" class="rounded-full mr-2" height="30" src="https://storage.googleapis.com/a1aa/image/oDJoEMVqSvYhGBkeGM3OOYudbjHWHZwNX96KKC7DZwRfiF1TA.jpg" width="30"/>
-                            <div>
-                                <p class="font-medium">Wiyah</p>
-                                <p class="text-gray-500 text-sm">Online 3 Jam yang lalu</p>
-                            </div>
-                        </li>
-                        <!-- Tambahkan teman lainnya... -->
-                    </ul>
-                </div>
-
-                <!-- Incoming Activity -->
-                <div class="bg-white p-4 rounded-lg shadow">
-                    <h3 class="text-lg text-red-700 font-bold mb-4">Incoming Activity</h3>
-                    <div class="flex items-center mb-2 hover:bg-gray-100 hover:scale-105 transform p-2 rounded-lg">
-                        <div class="bg-red-700 text-white rounded-full w-10 h-10 flex items-center justify-center mr-2">
-                            <p class="font-bold">20</p>
-                        </div>
-                        <div>
-                            <p class="font-medium">Badminton</p>
-                            <p class="text-gray-500 text-sm">14.00 - 16.00</p>
-                            <p class="text-gray-500 text-sm">Fun Game Bersama</p>
-                        </div>
-                    </div>
-                    <!-- Tambahkan aktivitas lainnya... -->
-                </div>
-            </div>
+        <div class="flex-grow lg:w-1/5 md:w-1/5 sm:w-full p-4 sticky top-0">
+            <?php include '../../template/right-menu-users.php'; ?>
         </div>
     </div>
 </main>

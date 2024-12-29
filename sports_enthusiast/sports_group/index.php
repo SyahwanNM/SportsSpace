@@ -2,6 +2,7 @@
 $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast";
 require "../../dbconnection.php";
 include '../../template/header-user.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,23 +52,23 @@ include '../../template/header-user.php';
                         while ($row = $result->fetch_assoc()){
                            echo "
                            <div class='my-2 p-2 bg-gray-100 relative rounded-lg shadow'>";
-                           $sport_type = $row['sport_type'];
-                           if ($sport_type == 'Badminton') {
+                           $jenis_olahraga = $row['jenis_olahraga'];
+                           if ($jenis_olahraga == 'Badminton') {
                               echo "
                               <div class='p-2 bg-red-700  rounded-md absolute -right-3 -top-3  '>
                                  <img src='../../asset/img/badminton-icon.png' alt=''>
                               </div>";
-                           } else if ($sport_type == "Voli") {
+                           } else if ($jenis_olahraga == "Voli") {
                               echo "
                               <div class='p-2 bg-red-700  rounded-md absolute -right-3 -top-3'>
                                  <i class='fa-solid fa-volleyball' style='color:white'></i>
                               </div> ";
-                           } else if ($sport_type == "Futsal") {
+                           } else if ($jenis_olahraga == "Futsal") {
                               echo "
                               <div class='p-2 bg-red-700  rounded-md absolute -right-3 -top-3'>
                                  <i class='fa-solid fa-futbol' style='color:white'></i>
                               </div>";
-                           } else if ($sport_type == "Basket") {
+                           } else if ($jenis_olahraga == "Basket") {
                               echo "
                               <div class='p-2 bg-red-700  rounded-md absolute -right-3 -top-3'>
                                  <i class='fa-solid fa-basketball' style='color:white'></i>
@@ -91,7 +92,7 @@ include '../../template/header-user.php';
                         <div class='py-2 items-center justify-between bg-red-700 absolute bottom-0 right-0 left-0 rounded-b-lg flex'>
                            <div class='items-center mx-2 flex'>
                               <i class='fa-solid fa-user-group fa-xs' style='color:white;'></i>
-                              <p class='text-xs text-white'>{$row['current_members']} / {$row['max_members']}</p>
+                              <p class='text-xs text-white'>{$row['current_members']} / {$row['kapasitas_maksimal']}</p>
                            </div>
                            <div class='flex mx-2'>
                               <img class='rounded-full w-6' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4cXdyD8JaA2V9NyT62jvDwgzS4CV2cmWdfA&s' alt=''>
