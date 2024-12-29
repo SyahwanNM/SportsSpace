@@ -35,6 +35,12 @@ $result = $conn->query($query);
       </div>
         <!-- Main Content -->
         <div class="flex-grow lg:w-4/5 md:w-3/4 sm:w-full p-4">
+            <div class="bg-white p-4 rounded-lg shadow mb-4">
+               <h2 class="text-2xl font-bold text-red-700 mb-4">Add Field</h2>
+               <a href="<?=$base_url?>/field/add.php">
+                  <button class="text-blue-500 flex items-center hover:text-blue-700 mb-4">Click here to add field</button>
+               </a>
+            </div>
             <div>
                 <h2 class="text-2xl font-bold mb-4">Trending</h2>
                     <!-- Tampilkan setiap lapangan dalam card -->

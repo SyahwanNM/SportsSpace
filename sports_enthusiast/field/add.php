@@ -17,14 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fasility = $_POST['fasility'];
     $price = $_POST['price'];
     $description = $_POST['description'];
+    $address = $_POST['address'];
 
     // Upload files
     $foto = 'uploads/' . basename($_FILES['foto']['name']);
     move_uploaded_file($_FILES['foto']['tmp_name'], $foto);
 
     // Insert data into database
-    $query = "INSERT INTO field (nama_lapangan, type, categori, lokasi, foto, opening_hours, closing_hours, fasility, price, description)
-              VALUES ('$nama_lapangan', '$type', '$categori', '$lokasi', '$foto', '$opening_hours', '$closing_hours', '$fasility', '$price', '$description')";
+    $query = "INSERT INTO field (nama_lapangan, type, categori, lokasi, foto, opening_hours, closing_hours, fasility, price, description, address)
+              VALUES ('$nama_lapangan', '$type', '$categori', '$lokasi', '$foto', '$opening_hours', '$closing_hours', '$fasility', '$price', '$description', '$address')";
 
     if ($conn->query($query) === TRUE) {
         header("Location: http://" .$_SERVER['HTTP_HOST'] ."/sportsspace/sports_enthusiast/field/index.php");
@@ -97,6 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold">Field Picture:</label>
                         <input type="file" name="foto" accept="image/*" class="w-full border border-red-600 rounded p-2" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-bold">Address (Google Maps Link):</label>
+                        <input type="text" name="address" class="w-full border border-red-600 rounded p-2 " required>
                     </div>
                 </div>
                 <!-- Right Column -->

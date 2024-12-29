@@ -54,8 +54,8 @@ include '../../template/header-user.php';
                            echo "
                            <a href='{$base_url}/sports_group/detail-group.php?id={$row['id']}'>
                            <div class='my-2 p-2 bg-gray-100 relative rounded-lg shadow'>";
-                           $sport_type = $row['jenis_olahraga'];
-                           if ($sport_type == 'Badminton') {
+                           $jenis_olahraga = $row['jenis_olahraga'];
+                           if ($jenis_olahraga == 'Badminton') {
                               echo "
                               <div class='p-2 bg-red-700  rounded-md absolute -right-3 -top-3  '>
                                  <img src='../../asset/img/badminton-icon.png' alt=''>
