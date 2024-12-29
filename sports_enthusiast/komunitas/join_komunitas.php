@@ -1,40 +1,22 @@
 <?php
 session_start();
 include '../../dbconnection.php';
-
-if (isset($_POST['btnSubmit'])) {
-    $id_kmnts = $_POST["idKomunitas"];
-    $nama = $_POST["nama"];
-    $jns_kmnts = $_POST["tipe"];
-    $max_members = $_POST["maxMember"];
-    $provinsi = $_POST["provinsi"];
-    $kota = $_POST["kota"];
-    $deskripsi = $_POST["deskripsi"];
-    $user_id = $_SESSION['user_id'];
-    $foto = $_FILES['foto']['name'];
-
-    $foto_tmp = $_FILES['foto']['tmp_name'];
-    $foto_path = "images/komunitas/" . basename($foto);
-    move_uploaded_file($foto_tmp, $foto_path);
-
-    $sampul = $_FILES['sampul']['name'];
-    $sampul_tmp = $_FILES['sampul']['tmp_name'];
-    $sampul_path = "images/komunitas/" . basename($sampul);
-    move_uploaded_file($sampul_tmp, $sampul_path);
-
-    $sqlStatement = "INSERT INTO komunitas VALUES ('$id_kmnts', '$nama', '$jns_kmnts', '$max_member', '$provinsi', '$kota', '$deskripsi' , '$foto', '$sampul', '$user_id')";
-    $query = mysqli_query($conn, $sqlStatement);
-     if ($query) {
-         $succesMsg = "Community added successfully " ;
-         header("location:index.php?successMsg=$succesMsg");
-     } else {
-         $errMsg = "Community failed to add " . mysqli_error($conn);
-     }
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
 }
 
-$sqlStatement = "SELECT * FROM komunitas";
-$query = mysqli_query($conn, $sqlStatement);
-$dtprodi = mysqli_fetch_all($query, MYSQLI_ASSOC);
+$user_id = $_SESSION['user_id'];
+
+// Ambil semua komunitas yang diikuti pengguna
+$sql = "SELECT k.id_kmnts, k.nama, k.sampul, k.foto, k.jns_olahraga, k.kota , k.max_members
+        FROM komunitas k
+        JOIN komunitas_saya ki ON k.id_kmnts = ki.id_kmnts
+        WHERE ki.user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +30,7 @@ $dtprodi = mysqli_fetch_all($query, MYSQLI_ASSOC);
   <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
   <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    
 </head>
 <style>
    body {
@@ -216,72 +199,25 @@ $dtprodi = mysqli_fetch_all($query, MYSQLI_ASSOC);
    <main class="pt-20">
       <div class="flex justify-end">
          <!-- Main Content -->
-         
          <div class="lg:w-3/5 md:w-3/5 p-4 ">  
+            <h2 class="text-2xl font-bold text-red-700 mb-2">Preferred Community</h2>
+            <div class="grid grid-cols-4 gap-4">
             
-         <?php
-        if (isset($errMsg)) {
-        ?>
-            <div class="alert alert-danger" role="alert">
-                <?= $errMsg ?>
+            <?php while ($row = $result->fetch_assoc()) { 
+                        echo "<a href='aktivitas_komunitas.php?id=" . $row["id_kmnts"] . "'>";
+                        echo '<div class="bg-white shadow-lg rounded-lg p-4 hover:bg-gray-300">';
+                        echo '<img src="images/komunitas/' . $row['foto'] . '"  class="rounded-lg mb-3 w-full h-auto">';
+                        echo '<h4 class="font-bold text-md">' . $row['nama'] . '</h4>';
+                        echo '<div class="text-sm text-gray-600">' . $row['jns_olahraga'] . '</div>';
+                        echo '<p class="text-sm text-gray-500">' . $row['kota'] . '</p>';
+                        echo '<div class="flex justify-between items-center mt-2 text-sm text-gray-600">';
+                        echo '<p>' . $row['max_members'] . ' members</p>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</a>';
+             } ?>
+        
             </div>
-        <?php
-        }
-        ?>
-            <h2 class="text-2xl font-bold text-red-700 mb-2 mt-4 text-center ">Create Your Own Community</h2>
-            <form method="POST" enctype="multipart/form-data" class="bg-white p-4 rounded shadow">
-                <div class="flex space-x-4">
-                <div class="w-1/2" >
-                    <div class="mb-2">
-                        <label class="block text-gray-700 font-bold text-center mr-20">Community Profil</label>              
-                        <img src="/asset/img/addFoto.png" class="w-24 h-24 rounded-full items-center ml-20">                        
-                        <input type="file" id="foto" name="foto" class="w-64 h-9 border border-red-600 rounded-xl p-0 mt-2">
-                    </div>
-                    <div class="mb-2">
-                        <label class="block text-gray-700 font-bold text-center mr-20">Cover Community</label>              
-                        <img src="/asset/img/addFoto2.png" class="w-64 h-24 ">                        
-                        <input type="file" id="sampul" name="sampul" class="w-64 h-9 border border-red-600 rounded-xl p-0 mt-2">
-                    </div>
-                </div>
-                <div class="w-1/2">
-                    <div class="mb-3">
-                        <label class="block text-gray-700 font-bold">Type of Sports:</label>
-                        <select id="tipe" name="tipe" class="w-full border border-red-600 rounded-xl h-8 p-1" required>
-                            <option value="" disabled selected>Choose the type of sport</option>
-                            <option value="Futsal">Futsal</option>
-                            <option value="Basket">Basket</option>
-                            <option value="Badminton">Badminton</option>
-                            <option value="Volly">Volly</option>
-                            <option value="Tennis">Tennis</option>
-                            <option value="Table Tennis">Table Tennis</option>
-                        </select>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label class="block text-gray-700 font-bold">Community Name:</label>
-                        <input type="text" id="nama" name="nama" class="w-full h-8 border border-red-600 rounded-xl p-2" placeholder="Enter the community name">
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-gray-700 font-bold">Maximum Members:</label>
-                        <input type="number" id="maxMember" name="maxMember" class="w-full h-8 border border-red-600 rounded-xl p-2" placeholder="Enter the maximum members">
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-gray-700 font-bold">Comunnity Address:</label>
-                        <input type="text" id="provinsi" name="provinsi" class="w-full h-8 border border-red-600 rounded-xl p-2 " placeholder="Province">
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" id="kota" name="kota" class="w-full h-8 border border-red-600 rounded-xl p-2" placeholder="City">
-                    </div>
-                    <div class="mb-3">
-                        <label class="block text-gray-700 font-bold">Description:</label>       
-                        <textarea id="deskripsi" name="deskripsi" class="w-full border border-red-600 rounded p-2 h-24"></textarea>
-                    </div>
-                </div>
-                </div>
-                <div class="text-center">
-                    <input type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-800" name="btnSubmit" value="Create">
-                </div>
-            </form>
         </div>
             <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4">
                <div class="fixed md:relative sm:relative">
