@@ -21,70 +21,41 @@ $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast/
    }
 </style>
 <body>
-   <aside id="logo-sidebar" class="fixed top-0 left-6 z-40 w-64 h-[87vh] pt-20 transition-transform -translate-x-full bg-white border-r sm:translate-x-0" aria-label="Sidebar">
-         <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
-            <ul class="space-y-2 text-sm">
+   <aside id="logo-sidebar" class="fixed top-0 left-6 z-40 w-64 h-[87vh] pt-20 transition-transform -translate-x-full bg-white border-r sm:translate-x-0 lg:w-1/5 md:w-1/5 sm:w-1/5" aria-label="Sidebar">
+      <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
+         <ul class="space-y-2 text-sm">
                <li>
                   <a href="<?=$base_url?>dashboard/post_list.php" class="flex items-center p-2 text-white rounded-lg hover:bg-red-700 hover:text-white group bg-red-700">
-                     <i class="fi fi-rs-home">
-                     </i>
+                     <i class="fi fi-rs-home"></i>
                      <span class="ms-3">Dashboard</span>
                   </a>
                </li>
-   
                <li>
-                  <a href="<?=$base_url?>komunitas/index.php" class="flex items-center w-full p-2 text-base text-black hover:bg-red-600 hover:bg-red-600 hover:text-white duration-75 rounded-lg group" 
-                     aria-controls="dropdown-example" 
-                     data-collapse-toggle="dropdown-example">
-                     <i class="fi fi-rs-users-alt"></i>   
+                  <a href="<?=$base_url?>komunitas/index.php" class="flex items-center w-full p-2 text-base text-black hover:bg-red-600 hover:bg-red-600 hover:text-white duration-75 rounded-lg group" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                     <i class="fi fi-rs-users-alt"></i>
                      <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Community</span>
                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                      </svg>
                   </a>
                   <ul id="dropdown-example" class="hidden py-2 space-y-2">
-                        <li>
+                     <li>
                            <a href="#" class="flex items-center w-full p-2 text-black hover:bg-red-600 transition duration-75 rounded-lg pl-11">My Community</a>
-                        </li>
-                        <li>
+                     </li>
+                     <li>
                            <a href="<?=$base_url?>komunitas/index.php" class="flex items-center w-full p-2 text-black hover:bg-red-600 hover:text-white transition duration-75 rounded-lg pl-11">Add Community</a>
-                        </li>
+                     </li>
                   </ul>
                </li>
-               
-               <script>
-                  document.addEventListener('DOMContentLoaded', () => {
-                     const menuButton = document.querySelector('[data-collapse-toggle="dropdown-example"]');
-                     const submenu = document.getElementById('dropdown-example');
-                     const dropdownIcon = menuButton.querySelector('svg');
-               
-                     // Klik pada menu utama (bukan ikon dropdown) akan membuka halaman
-                     menuButton.addEventListener('click', (event) => {
-                        if (event.target === dropdownIcon || dropdownIcon.contains(event.target)) {
-                           event.preventDefault(); // Hanya cegah navigasi jika ikon diklik
-                           submenu.classList.toggle('hidden');
-                        }
-                     });
-               
-                     // Cegah submenu menutup ketika salah satu opsinya diklik
-                     submenu.addEventListener('click', (event) => {
-                        event.stopPropagation(); // Hindari penutupan submenu
-                     });
-                  });
-               </script>
-               
-               
-      
+               <li>
                   <a href="<?=$base_url?>field/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
-                     <i class="fi fi-rs-court-sport">
-                     </i>
+                     <i class="fi fi-rs-court-sport"></i>
                      <span class="flex-1 ms-3 whitespace-nowrap">Field</span>
                   </a>
                </li>
                <li>
-                  <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
+                  <a href="<?=$base_url?>reward/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
                      <i class="fi fi-rs-trophy-star"></i>
-                     </i>
                      <span class="flex-1 ms-3 whitespace-nowrap">Reward</span>
                   </a>
                </li>
@@ -96,14 +67,13 @@ $base_url = "HTTP://" . $_SERVER['HTTP_HOST'] . "/sportsspace/sports_enthusiast/
                </li>
                <li>
                   <a href="<?=$base_url?>profile/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-600 hover:text-white group">
-                     <i class="fi fi-rs-user">
-                     </i>
+                     <i class="fi fi-rs-user"></i>
                      <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
                   </a>
                </li>
-            </ul>
-         </div>
-      </aside>
+         </ul>
+      </div>
+   </aside>
 </body>
 </html>
 
