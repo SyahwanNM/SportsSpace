@@ -16,11 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $address = $_POST['address'];
     $kapasitas_maksimal = $_POST['kapasitas_maksimal'];
     $current_members = 0;
-    $sport_type = $_POST['sport_type'];
+    $jenis_olahraga = $_POST['jenis_olahraga'];
+    $payment_method = $_POST['payment_method'];
+    $payment_amount = $_POST['payment_amount'];
 
     // Insert data into database
-    $query = "INSERT INTO sports_group (title, event_date, start_time,end_time,city, address, kapasitas_maksimal, current_members, sport_type)
-              VALUES ('$title', '$event_date', '$start_time', '$end_time', '$city', '$address', '$kapasitas_maksimal', '$current_members', '$sport_type')";
+    $query = "INSERT INTO sports_group (title, event_date, start_time,end_time,city, address, kapasitas_maksimal, current_members, jenis_olahraga,payment_method,payment_amount)
+              VALUES ('$title', '$event_date', '$start_time', '$end_time', '$city', '$address', '$kapasitas_maksimal', '$current_members', '$jenis_olahraga', '$payment_method', '$payment_amount')";
 
     if ($conn->query($query) === TRUE) {
         header("Location: http://" .$_SERVER['HTTP_HOST'] ."/sportsspace/sports_enthusiast/sports_group/index.php");
