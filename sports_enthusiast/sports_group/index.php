@@ -34,12 +34,11 @@ include '../../template/footer.php';
          ?>
          <!-- Main Content -->
          <div class="xl:w-3/5 lg:w-3/5 md:w-3/5 p-4 mr-8">
-            <!-- Banner -->
             
             <!-- Post -->
             <div class="bg-white p-4 rounded-lg shadow mb-4">
                   <h1 class="text-center font-extrabold text-xl text-red-700 mb-6">SPORTS GROUP</h1>
-                <div class="grid grid-cols-3 gap-8">
+               <div class="grid grid-cols-3 gap-8">
                   <?php
                      $query = "SELECT * FROM sports_group";
                      $result = $result = $conn->query($query);
@@ -98,26 +97,13 @@ include '../../template/footer.php';
                         }
                      }
                   ?>
-                    
-                    
-                    <div class="my-2 p-2 bg-gray-100 relative rounded-lg shadow">
-                        
-                        
-                        <div class="py-2 items-center justify-between bg-red-700 absolute bottom-0 right-0 left-0 rounded-b-lg flex">
-                           <div class="items-center mx-2 flex">
-                              
-                              
-                           </div>
-                           
-                        </div>
-</div>
-</div>
-                
                </div>
             </div>
-            <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0">
-               <?php include '../../template/right-menu-users.php'; ?>
-            </div>
+         </div>
+
+         <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4 sticky top-0">
+            <?php include '../../template/right-menu-users.php'; ?>
+         </div>
       </div>
    </main>
 </body>

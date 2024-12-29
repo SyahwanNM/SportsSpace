@@ -22,7 +22,6 @@ include '../../template/sidebar-user.php';
    }
 </style>
 <body class="bg-gray-100">
-
      <main class="pt-20">
         <div class="flex justify-end">
         <!-- Main Content -->
