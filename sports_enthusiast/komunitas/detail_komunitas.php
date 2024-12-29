@@ -1,7 +1,40 @@
 <?php
+session_start();
 include '../../dbconnection.php';
-$sql = "SELECT * FROM komunitas";
-$result = $conn->query($sql);
+// $sql = "SELECT * FROM komunitas ";
+// $result = $conn->query($sql);
+
+$id = $_GET['id_kmnts'];
+$query = "SELECT * FROM komunitas WHERE id_kmnts = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param('i', $id_kmnts);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+} else {
+    echo "komunitas not found.";
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+   if (isset($_POST['id_kmnts'])) {
+       $id_kmnts = $_POST['id_kmnts'];
+       $user_id = $_SESSION['user_id']; 
+
+       $sql = "INSERT INTO komunitas_saya (user_id, id_kmnts) VALUES (?, ?)";
+       $stmt = $conn->prepare($sql);
+       $stmt->bind_param("ii", $user_id, $id_kmnts); 
+
+       if ($stmt->execute()) {
+           echo "Data berhasil disimpan!";
+       } else {
+           echo "Error: " . $stmt->error;
+       }
+   }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -125,20 +158,32 @@ $result = $conn->query($sql);
       <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
          <ul class="space-y-2 font-medium">
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="../dashboard/post_list.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-home">
                   </i>
                   <span class="ms-3">Dashboard</span>
                </a>
             </li>
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-users-alt"></i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Community</span>
                </a>
             </li>
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="add_komunitas.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+                  <i class="fi fi-rs-users-alt"></i>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Add Community</span>
+               </a>
+            </li>
+            <li>
+               <a href="join_komunitas.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+                  <i class="fi fi-rs-users-alt"></i>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Join Community</span>
+               </a>
+            </li>
+            <li>
+               <a href="../field/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-court-sport">
                   </i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Field</span>
@@ -152,7 +197,7 @@ $result = $conn->query($sql);
                </a>
             </li>
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="../sports_group/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-two-swords"></i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Sports Group</span>
                </a>
@@ -177,26 +222,29 @@ $result = $conn->query($sql);
 
             <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-8">
                 <!-- Gambar Header -->
-                <?php
+                <!-- //?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) { 
-                 ?> 
+                 ?>  -->
                 <div class="relative">
                     <?php echo '<img src="images/komunitas/' . $row['sampul'] . '" class="w-full h-32 object-cover">'; ?>
                 </div>
 
-                <!-- Bagian Profil Komunitas -->
+               
                 <div class="flex items-center justify-center -mt-12">
                   <?php echo '<img src="images/komunitas/' . $row['foto'] . '"class="w-32 h-32 rounded-full border-4 border-white shadow-md z-10">'; ?>
                 </div>
 
-                <!-- Informasi Komunitas -->
+                
                 <div class="text-center mt-4 mb-6">
                     <?php echo '<h2 class="text-2xl font-bold text-gray-800 items-center">'. $row['nama'] .'</h2>'; ?>
-                    <?php echo '<p class="text-gray-600">'.$row['tipe']. '|' .$row['kota']. '|' .$row['maxMember'].'</p>'; ?>
+                    <?php echo '<p class="text-gray-600">'.$row['jns_olahraga']. '|' .$row['kota']. '|' .$row['max_members'].'</p>'; ?>
                 </div>
                 <div class="flex justify-end mb-6 pr-6">
-                    <button class="items-center bg-red-600 text-white w-24 px-4 py-2 rounded-lg hover:bg-red-700">JOIN</button>
+                     <form action="" method="POST">
+                        <input type="hidden" name="id_kmnts" value="<?php echo $row['id_kmnts']; ?>" />
+                        <button type="submit" class="items-center bg-red-600 text-white w-24 px-4 py-2 rounded-lg hover:bg-red-700">JOIN</button>
+                    </form>
                 </div>
             </div>
 
@@ -247,9 +295,9 @@ $result = $conn->query($sql);
                                 </li>
                             </ul>
                          </div>
-                         <?php
+                         <!-- ?php
                             }}
-                         ?>
+                         ?> -->
                     </div>
                 </div>
                 <script>
@@ -281,7 +329,8 @@ $result = $conn->query($sql);
                     });
                  </script>
                 
-        </div>
+            </div>
+         </div>
             <div class="lg:w-1/5 md:w-1/4 sm:w-full p-4">
                <div class="fixed md:relative sm:relative">
                   <!-- Friends List -->

@@ -1,17 +1,18 @@
 <?php
+session_start();
 include '../../dbconnection.php';
 
 if (isset($_POST['btnSubmit'])) {
-    $id = $_POST["idKomunitas"];
-    $tipe = $_POST["tipe"];
+    $id_kmnts = $_POST["idKomunitas"];
     $nama = $_POST["nama"];
-    $maxMember = $_POST["maxMember"];
+    $jns_kmnts = $_POST["tipe"];
+    $max_members = $_POST["maxMember"];
     $provinsi = $_POST["provinsi"];
     $kota = $_POST["kota"];
     $deskripsi = $_POST["deskripsi"];
-    
-
+    $user_id = $_SESSION['user_id'];
     $foto = $_FILES['foto']['name'];
+
     $foto_tmp = $_FILES['foto']['tmp_name'];
     $foto_path = "images/komunitas/" . basename($foto);
     move_uploaded_file($foto_tmp, $foto_path);
@@ -21,11 +22,11 @@ if (isset($_POST['btnSubmit'])) {
     $sampul_path = "images/komunitas/" . basename($sampul);
     move_uploaded_file($sampul_tmp, $sampul_path);
 
-    $sqlStatement = "INSERT INTO komunitas VALUES ('$id', '$tipe', '$nama', '$maxMember', '$provinsi', '$kota', '$foto', '$sampul', '$deskripsi')";
+    $sqlStatement = "INSERT INTO komunitas VALUES ('$id_kmnts', '$nama', '$jns_kmnts', '$max_member', '$provinsi', '$kota', '$deskripsi' , '$foto', '$sampul', '$user_id')";
     $query = mysqli_query($conn, $sqlStatement);
      if ($query) {
          $succesMsg = "Community added successfully " ;
-         header("location:komunitas.php?successMsg=$succesMsg");
+         header("location:index.php?successMsg=$succesMsg");
      } else {
          $errMsg = "Community failed to add " . mysqli_error($conn);
      }
@@ -156,20 +157,32 @@ $dtprodi = mysqli_fetch_all($query, MYSQLI_ASSOC);
       <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
          <ul class="space-y-2 font-medium">
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="../dashboard/post_list.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-home">
                   </i>
                   <span class="ms-3">Dashboard</span>
                </a>
             </li>
             <li>
-               <a href="komunitas.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-users-alt"></i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Community</span>
                </a>
             </li>
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="add_komunitas.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+                  <i class="fi fi-rs-users-alt"></i>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Add Community</span>
+               </a>
+            </li>
+            <li>
+               <a href="join_komunitas.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+                  <i class="fi fi-rs-users-alt"></i>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Join Community</span>
+               </a>
+            </li>
+            <li>
+               <a href="../field/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-court-sport">
                   </i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Field</span>
@@ -183,7 +196,7 @@ $dtprodi = mysqli_fetch_all($query, MYSQLI_ASSOC);
                </a>
             </li>
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="../sports_group/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-two-swords"></i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Sports Group</span>
                </a>

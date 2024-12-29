@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../../dbconnection.php';
 $sql = "SELECT * FROM komunitas";
 $result = $conn->query($sql);
@@ -128,26 +129,32 @@ $result = $conn->query($sql);
       <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
          <ul class="space-y-2 font-medium">
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="../dashboard/post_list.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-home">
                   </i>
                   <span class="ms-3">Dashboard</span>
                </a>
             </li>
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-users-alt"></i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Community</span>
                </a>
             </li>
             <li>
-               <a href="addKomunitas.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="add_komunitas.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-users-alt"></i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Add Community</span>
                </a>
             </li>
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="join_komunitas.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+                  <i class="fi fi-rs-users-alt"></i>
+                  <span class="flex-1 ms-3 whitespace-nowrap">Join Community</span>
+               </a>
+            </li>
+            <li>
+               <a href="../field/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-court-sport">
                   </i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Field</span>
@@ -161,7 +168,7 @@ $result = $conn->query($sql);
                </a>
             </li>
             <li>
-               <a href="#" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
+               <a href="../sports_group/index.php" class="flex items-center p-2 text-black rounded-lg hover:bg-red-700 hover:text-white group">
                   <i class="fi fi-rs-two-swords"></i>
                   <span class="flex-1 ms-3 whitespace-nowrap">Sports Group</span>
                </a>
@@ -202,14 +209,14 @@ $result = $conn->query($sql);
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                       echo '<a href="detail_komunitas.php">';
+                       echo '<a href="detail_komunitas.php?id={$row["id_kmnts"]}">';
                         echo '<div class="bg-white shadow-lg rounded-lg p-4 hover:bg-gray-300">';
                         echo '<img src="images/komunitas/' . $row['foto'] . '"  class="rounded-lg mb-3 w-full h-auto">';
                         echo '<h4 class="font-bold text-md">' . $row['nama'] . '</h4>';
-                        echo '<div class="text-sm text-gray-600">' . $row['tipe'] . '</div>';
+                        echo '<div class="text-sm text-gray-600">' . $row['jns_olahraga'] . '</div>';
                         echo '<p class="text-sm text-gray-500">' . $row['kota'] . '</p>';
                         echo '<div class="flex justify-between items-center mt-2 text-sm text-gray-600">';
-                        echo '<p>' . $row['maxMember'] . ' members</p>';
+                        echo '<p>' . $row['max_members'] . ' members</p>';
                         echo '</div>';
                         echo '</div>';
                         echo '</a>';
@@ -222,58 +229,31 @@ $result = $conn->query($sql);
             <h2 class="text-2xl font-bold text-red-700 mb-2 mt-4">Community in Your City</h2>
             <div class="grid grid-cols-4 gap-1 overflow-x">
               <!-- Card -->
-              <div class="bg-white shadow-lg rounded-lg p-4 m-1 w-100 hover:bg-gray-300" >
-                <img src="../asset/img/voli2-bg.png" alt="Basket Majalaya" class="rounded-lg mb-3 w-full h-auto">
-                <h4 class="font-bold text-md">Borcelle Volly</h4>
-                <div class="flex items-center text-sm text-gray-600">
-                  <span>Volly</span>
-                  
-                </div>
-                <p class="text-sm text-gray-500">Bandung</p>
-                <div class="flex justify-between items-center mt-2 text-sm text-gray-600">
-                  <p>13/25</p>
-                  <i class="fas fa-user"></i>
-                </div>
-              </div>
-              <div class="bg-white shadow-lg rounded-lg p-4 m-1 w-100 hover:bg-gray-300" >
-                <img src="../asset/img/badminton3-bg.png" alt="Basket Majalaya" class="rounded-lg mb-3 w-full h-auto">
-                <h4 class="font-bold text-md">Society Club</h4>
-                <div class="flex items-center text-sm text-gray-600">
-                  <span>Badminton</span>
-                  
-                </div>
-                <p class="text-sm text-gray-500">Bandung</p>
-                <div class="flex justify-between items-center mt-2 text-sm text-gray-600">
-                  <p>10/25</p>
-                  <i class="fas fa-user"></i>
-                </div>
-              </div>
-              <div class="bg-white shadow-lg rounded-lg p-4 m-1 w-100 hover:bg-gray-300" >
-                <img src="../asset/img/tenis-bg.jpg" alt="Basket Majalaya" class="rounded-lg mb-3 w-full h-auto">
-                <h4 class="font-bold text-md">Tenis Court</h4>
-                <div class="flex items-center text-sm text-gray-600">
-                  <span>Tennis</span>
-                  
-                </div>
-                <p class="text-sm text-gray-500">Bandung</p>
-                <div class="flex justify-between items-center mt-2 text-sm text-gray-600">
-                  <p>20/25</p>
-                  <i class="fas fa-user"></i>
-                </div>
-              </div>
-              <div class="bg-white shadow-lg rounded-lg p-4 m-1 w-100 hover:bg-gray-300" >
-                <img src="../asset/img/futsal3-bg.jpg" alt="Basket Majalaya" class="rounded-lg mb-3 w-full h-auto">
-                <h4 class="font-bold text-md">Bs Futsal Fc</h4>
-                <div class="flex items-center text-sm text-gray-600">
-                  <span>Futsal</span>
-                  
-                </div>
-                <p class="text-sm text-gray-500">Bandung</p>
-                <div class="flex justify-between items-center mt-2 text-sm text-gray-600">
-                  <p>20/25</p>
-                  <i class="fas fa-user"></i>
-                </div>
-              </div>
+              <?php
+                     $sql = "SELECT k.* from komunitas k JOIN users u ON k.kota = u.kota where u.user_id = ?";
+                     $stmt = $conn->prepare($sql);
+                     $stmt->bind_param("i", $_SESSION['user_id']); 
+                     $stmt->execute();
+                     $hasil = $stmt->get_result();
+                     while ($data = $hasil->fetch_assoc()) {
+                        echo '<a href="detail_komunitas.php">';
+                        echo '<div class="bg-white shadow-lg rounded-lg p-4 hover:bg-gray-300">';
+                        echo '<img src="images/komunitas/' . $data['foto'] . '"  class="rounded-lg mb-3 w-full h-auto">';
+                        echo '<h4 class="font-bold text-md">' . $data['nama'] . '</h4>';
+                        echo '<div class="text-sm text-gray-600">' . $data['jns_olahraga'] . '</div>';
+                        echo '<p class="text-sm text-gray-500">' . $data['kota'] . '</p>';
+                        echo '<div class="flex justify-between items-center mt-2 text-sm text-gray-600">';
+                        echo '<p>' . $data['max_members'] . ' members</p>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</a>';
+                     }
+                     $stmt->close();
+                     $conn->close();
+                  ?>
+
+             
+              
             </div>
            
             
