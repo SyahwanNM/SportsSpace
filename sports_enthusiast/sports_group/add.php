@@ -14,13 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $end_time = $_POST['end_time'];
     $city = $_POST['city'];
     $address = $_POST['address'];
-    $max_members = $_POST['max_members'];
+    $kapasitas_maksimal = $_POST['kapasitas_maksimal'];
     $current_members = 0;
     $sport_type = $_POST['sport_type'];
 
     // Insert data into database
-    $query = "INSERT INTO sports_group (title, event_date, start_time,end_time,city, address, max_members, current_members, sport_type)
-              VALUES ('$title', '$event_date', '$start_time', '$end_time', '$city', '$address', '$max_members', '$current_members', '$sport_type')";
+    $query = "INSERT INTO sports_group (title, event_date, start_time,end_time,city, address, kapasitas_maksimal, current_members, sport_type)
+              VALUES ('$title', '$event_date', '$start_time', '$end_time', '$city', '$address', '$kapasitas_maksimal', '$current_members', '$sport_type')";
 
     if ($conn->query($query) === TRUE) {
         header("Location: http://" .$_SERVER['HTTP_HOST'] ."/sportsspace/sports_enthusiast/sports_group/index.php");
@@ -114,7 +114,7 @@ include "../../template/sidebar-user.php"
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold">Maximum Members:</label>
-                        <input type="number" name="max_members" class="w-full border border-red-600 rounded p-2" required>
+                        <input type="number" name="kapasitas_maksimal" class="w-full border border-red-600 rounded p-2" required>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold">Address (Google Maps Link):</label>
